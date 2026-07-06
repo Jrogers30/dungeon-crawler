@@ -1,0 +1,17 @@
+[
+  {
+    "name": "zombie",
+    "hp": 15,
+    "attack": 10
+  },
+  {
+    "name": "goblin",
+    "hp": 10,
+    "attack": 6
+  },
+  {
+    "name": "skeleton",
+    "hp": 30,
+    "attack": 5
+  }
+]
