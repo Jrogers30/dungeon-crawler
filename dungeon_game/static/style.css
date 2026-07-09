@@ -1,0 +1,87 @@
+body 
+{ 
+    background:#1a1a2e; color:#eee; font-family:'Courier New',monospace;
+    display:flex; justify-content:center; align-items:center; min-height:100vh; margin:0; 
+}
+.screen 
+{ 
+    background:#16213e; border:2px solid #0f3460; border-radius:12px;
+    padding:2rem; width:420px; text-align:center; 
+}
+h1 
+{
+    color: #e94560;
+    letter-spacing: 2px;
+  }
+
+.hidden 
+{
+    display: none;
+}
+
+.stats 
+{
+    display: flex;
+    justify-content: space-between;
+    margin: 1.5rem 0;
+}
+
+.fighter 
+{
+    background: #0f3460;
+    border-radius: 8px;
+    padding: 1rem;
+    width: 45%;
+}
+
+.fighter h3 
+{
+    margin: 0 0 .5rem;
+    color: #e94560;
+}
+
+.hp-bar
+{
+    background: #333;
+    border-radius: 6px;
+    height: 14px;
+    overflow: hidden;
+    margin: .5rem 0;
+}
+
+.hp-fill 
+{
+    background: #4ecca3;
+    height: 100%;
+    transition: width .3s;
+}
+
+button 
+{
+    background: #e94560;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: .7rem 1.4rem;
+    margin: .3rem;
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  
+button:hover 
+{
+    background: #ff6b81;
+}
+
+#log
+{
+    background: #0a0a1a;
+    border-radius: 6px;
+    padding: .8rem;
+    margin-top: 1rem;
+    min-height: 3rem;
+    font-size: .9rem;
+    text-align: left;
+}

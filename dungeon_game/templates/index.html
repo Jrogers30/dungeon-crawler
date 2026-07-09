@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dungeon Crawler</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="screen">
+  <h1>DUNGEON CRAWLER</h1>
+
+  <div id="start-screen">
+    <p>A hero enters the dungeon...</p>
+    <button onclick="startGame()">START GAME</button>
+  </div>
+
+  <div id="battle-screen" class="hidden">
+    <div class="stats">
+      <div class="fighter">
+        <h3 id="hero-name">Hero</h3>
+        <div class="hp-bar"><div class="hp-fill" id="hero-hp-bar"></div></div>
+        <span id="hero-hp"></span>
+      </div>
+      <div class="fighter">
+        <h3 id="monster-name">Monster</h3>
+        <div class="hp-bar"><div class="hp-fill" id="monster-hp-bar"></div></div>
+        <span id="monster-hp"></span>
+      </div>
+    </div>
+    <button onclick="sendAction('attack')">ATTACK</button>
+    <button onclick="sendAction('defend')">DEFEND</button>
+    <button onclick="sendAction('quit')">QUIT</button>
+    <div id="log"></div>
+  </div>
+
+  <div id="end-screen" class="hidden">
+    <h2 id="end-message"></h2>
+    <button onclick="location.reload()">PLAY AGAIN</button>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='game.js') }}"></script>
+</body>
+</html>

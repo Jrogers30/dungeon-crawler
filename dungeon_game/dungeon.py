@@ -1,6 +1,7 @@
 import random
 import json
 
+
 class Character:
     def __init__(self, name,hp,attackpwr):
         self.name = name
@@ -36,7 +37,12 @@ class Character:
     def isalive(self):
         return self.hp > 0
     
-
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "hp": self.hp,
+            "attack": self.attackpwr
+        }
 
         
 class Hero(Character):
@@ -109,194 +115,73 @@ def fight(hero,monster):
 
 
 
+if __name__ == "__main__":
 
 
-with open ('hero.json', mode="r", encoding="utf-8") as file:
-    hero_data = json.load(file)
+    with open ('hero.json', mode="r", encoding="utf-8") as file:
+        hero_data = json.load(file)
 
 
-with open ('monster.json', mode="r", encoding="utf-8") as file:
-    monster_data = json.load(file)
+    with open ('monster.json', mode="r", encoding="utf-8") as file:
+        monster_data = json.load(file)
 
 
-hero = Hero(hero_data["name"],hero_data["hp"],hero_data["attack"])
-monsters = []
+    hero = Hero(hero_data["name"],hero_data["hp"],hero_data["attack"])
+    monsters = []
 
-for data in monster_data:
-    monsters.append(
-        Monster(data["name"],
-                data["hp"],
-                data["attack"]
+    for data in monster_data:
+        monsters.append(
+            Monster(data["name"],
+                    data["hp"],
+                    data["attack"]
+                )
             )
-        )
-    
-monster = monsters[0]
+        
+    monster = monsters[0]
 
 
-def save(character):
-    data = {
-        "name": character.name,
-        "hp": character.hp,
-        "attack": character.attackpwr
-    }
-    with open ("hero.json", mode="w", encoding="utf-8") as file:
-        json.dump(data,file,indent=2)
+    def save(character):
+        data = {
+            "name": character.name,
+            "hp": character.hp,
+            "attack": character.attackpwr
+        }
+        with open ("hero.json", mode="w", encoding="utf-8") as file:
+            json.dump(data,file,indent=2)
 
-def save_monsters(data):
-    list_of_monsters = []
-    for monsters_obj in data:
-        list_of_monsters.append({
-            "name": monsters_obj.name,
-            "hp": monsters_obj.hp,
-            "attack": monsters_obj.attackpwr
-        })
-    with open ("monster.json", mode="w", encoding="utf-8") as file:
-        json.dump(list_of_monsters,file,indent=2)
-    
-    
-
-
-while True:
+    def save_monsters(data):
+        list_of_monsters = []
+        for monsters_obj in data:
+            list_of_monsters.append({
+                "name": monsters_obj.name,
+                "hp": monsters_obj.hp,
+                "attack": monsters_obj.attackpwr
+            })
+        with open ("monster.json", mode="w", encoding="utf-8") as file:
+            json.dump(list_of_monsters,file,indent=2)
+        
+        
 
 
-    print(f"{hero.show_status()}{monster.show_status()}")
+    while True:
 
-    game_res = fight(hero,monster)
-    if game_res == "QUIT":
-        save(hero)
-        save_monsters(monsters)
-        break
-    elif game_res == "KILLED":
-        monsters.pop(0)
-        save_monsters(monsters)
-        if len(monsters) == 0:
-            print("YOU HAVE BEATEN ALL THE MONSTERS!!!!")
+
+        print(f"{hero.show_status()}{monster.show_status()}")
+
+        game_res = fight(hero,monster)
+        if game_res == "QUIT":
+            save(hero)
+            save_monsters(monsters)
             break
+        elif game_res == "KILLED":
+            monsters.pop(0)
+            save_monsters(monsters)
+            if len(monsters) == 0:
+                print("YOU HAVE BEATEN ALL THE MONSTERS!!!!")
+                break
 
-        monster = monsters[0]
-    elif game_res == "HERO":
-        break
-    
-    
-
-
-
-
-#jake = Hero("jake",20,5)
-#zombie = Monster("zombie",15,10)
-
-
-
-
-
-
-
-
-
-
-'''
-print(jake.defending) # False
-print(jake.defend()) # True
-print(jake.takeDmg(zombie)) #15
-print(jake.defending) # False
-'''
-#print(zombie.attack(jake))
-#
-
-
-
-
-
-
-
-
-'''
-hero_name = input("Enter your Heros name: ")
-
-hero = { "name": hero_name, 
-        "hp": 10,
-        "attack": random.randrange(1,10),
-        }
-zombie = { "name": 'zombie', 
-        "hp": 20,
-        "attack": random.randrange(1,10)
-        }
-print(f"{hero['name']} has stepped into the dungeon with {hero['hp']} HP and {hero['attack']} attack")
-
-
-
-print(f"{hero['name']} has appeared to find a wandering {zombie['name']}")   
-
-
-
-
-
-
-
-def defend(hero_HP, mattk,defense):
-    reduced = defense - mattk
-
-    if reduced < 0:
-
-       hero_HP += reduced
-    else:
-        print("You have defended against the attk\n")
-
-    return hero_HP
-
-def win_status(hero_hp, Mon_HP):
-    win_status = False 
-    if hero_hp <= 0:
-        print("YOU LOST!!!")
-        win_status = True
-    elif Mon_HP <= 0:
-        print("YOU WON!!!")
-        win_status = True
-
-    return win_status
-
-def show_status():
-
-    return f"\nHero: {hero['name']}\tMonster: {zombie['name']}\nHP: {hero['hp']}\t\tHP: {zombie['hp']}\nATK: {hero['attack']}\t\tATK: {zombie['attack']}"
-
-def monster_turn(hero_HP, mattk):
-
-    hero_HP -= mattk
-
-    return hero_HP
-
-def fight(hit_points,mhit_points,attk_pwr,mattk_pwr):
+            monster = monsters[0]
+        elif game_res == "HERO":
+            break
         
-
-    print(show_status())
-    user = input("CHOOSE: ATTACK or DEFEND").lower()
-    if user == "attack":
-        print(f"HERO {hero['name']} attacks {zombie['name']} for {hero['attack']} dmg.\n")
-        mhit_points = attack(mhit_points,attk_pwr)
-
-        print(f"MONSTER {zombie['name']} attacks {hero['name']} for {zombie['attack']} dmg.\n")
-        hit_points = monster_turn(hit_points,mattk_pwr)
-
-    elif user == "defend":
-
-        hit_points = defend(hit_points,mattk_pwr,5)
-
-    else:
-        print("TRY AGAIN!\n")
     
-    return hit_points,mhit_points
-        
-
-
-
-
-while True:
-
-    hero['hp'],zombie['hp'] = fight(hero['hp'],zombie['hp'],hero['attack'],zombie['attack'])
-    game_end = win_status(hero['hp'],zombie['hp'])
-    if game_end == True:
-        break
-    hero['attack'] = random.randrange(1,10)
-    zombie['attack'] = random.randrange(1,10)
-
-'''
